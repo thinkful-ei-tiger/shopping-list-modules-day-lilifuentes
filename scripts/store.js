@@ -13,12 +13,17 @@ function findById(id) {
 function addItem(name) {
     try {
         item.validateName(name);
-        item.create(name);
-        this.items.push(name);
+        let newItem = item.create(name);
+        this.items.push(newItem);
     } catch (error) {
         console.log('Error');
     };
 };
+
+function findAndToggleChecked(id){
+    let lookup = this.findById(id).toggleAttribute(checked, true);
+    return lookup;
+}
 
 function findAndUpdateName(id, newName) {
     try {
@@ -30,8 +35,13 @@ function findAndUpdateName(id, newName) {
 };
 
 function findAndDelete(id) {
-    let removal = store.items.find(id).splice();
+    let removal = this.items.findIndex(item => item.id === id);
+    this.items.splice(removal, 1);
     return removal;
+}
+
+function toggleCheckedFilter() {
+    this.hideCheckedItems;  
 }
 
 
@@ -40,8 +50,10 @@ export default {
     hideCheckedItems,
     findById,
     addItem,
+    findAndToggleChecked,
     findAndUpdateName,
-    findAndDelete
+    findAndDelete,
+    toggleCheckedFilter
 }
 
 
