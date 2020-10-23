@@ -1,7 +1,5 @@
-const store = {
-  items: [],
-  hideCheckedItems: false
-};
+import store from './store.js';
+import item from './item.js';
 
 const generateItemElement = function (item) {
   let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
@@ -45,7 +43,14 @@ const render = function () {
 };
 
 const addItemToShoppingList = function (itemName) {
-  store.items.push({ id: cuid(), name: itemName, checked: false });
+  try {
+    item.validateName(itemName);
+    item.create(itemName);
+    store.items.push(itemName);
+    render();
+  } catch (error) {
+    console.log('Cannot add item: ${error.message}')
+  }
 };
 
 const handleNewItemSubmit = function () {
@@ -131,6 +136,7 @@ const handleEditShoppingItemSubmit = function () {
   });
 };
 
+
 const bindEventListeners = function () {
   handleNewItemSubmit();
   handleItemCheckClicked();
@@ -139,8 +145,10 @@ const bindEventListeners = function () {
   handleToggleFilterClick();
 };
 
+
 // This object contains the only exposed methods from this module:
 export default {
   render,
   bindEventListeners
 };
+
