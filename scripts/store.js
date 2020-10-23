@@ -13,8 +13,8 @@ function findById(id) {
 function addItem(name) {
     try {
         item.validateName(name);
-        let newItem = item.create(name);
-        this.items.push(newItem);
+        let thing = item.create(name);
+        this.items.push(thing);
     } catch (error) {
         console.log('Error');
     };
